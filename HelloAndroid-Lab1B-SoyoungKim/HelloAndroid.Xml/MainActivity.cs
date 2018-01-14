@@ -13,8 +13,19 @@ namespace HelloAndroid.Xml
             SetContentView(Resource.Layout.Main);
             var aButton = FindViewById<Button>(Resource.Id.aButton);
             var aLabel = FindViewById<TextView>(Resource.Id.helloLabel);
+            var aButton2 = FindViewById<Button>(Resource.Id.aButton2);
+            var aLabel2 = FindViewById<TextView>(Resource.Id.helloLabel2);
+
+
+            // event handler for the first button
             aButton.Click += (sender, e) => {
-                aLabel.Text = "Hello from the button";
+                aLabel.SetText(Resource.String.helloLabelText2Change);
+                aLabel2.SetText(Resource.String.helloLabelText2Change);
+            };
+
+            // event handler for the second button
+            aButton2.Click += (sender, e) => {
+                aLabel.Text = aLabel2.Text = "";
             };
         }
     }
