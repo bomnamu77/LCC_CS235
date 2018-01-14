@@ -63,11 +63,20 @@ namespace HelloAndroid
 			// aapt resource value: 0x7f030000
 			public const int app_name = 2130903040;
 			
+			// aapt resource value: 0x7f030003
+			public const int helloButton2Text = 2130903043;
+			
 			// aapt resource value: 0x7f030001
 			public const int helloButtonText = 2130903041;
 			
+			// aapt resource value: 0x7f030004
+			public const int helloLabel2Text = 2130903044;
+			
 			// aapt resource value: 0x7f030002
 			public const int helloLabelText = 2130903042;
+			
+			// aapt resource value: 0x7f030005
+			public const int helloLabelText2Change = 2130903045;
 			
 			static String()
 			{
