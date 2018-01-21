@@ -5,7 +5,7 @@ using Android.Content;
 
 namespace _99Bugs
 {
-    [Activity(Label = "99Bugs", MainLauncher = true)]
+    [Activity(Label = "99 Bugs", MainLauncher = true)]
     public class MainActivity : Activity
     {
         public const string TAKE_DOWN = "TakeDown";
