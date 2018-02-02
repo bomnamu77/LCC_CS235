@@ -13,11 +13,14 @@ namespace Lab3
 	{
 		private Random randNumGen = new Random();
 		private List<Quote> quotes = new List<Quote>();
-        private int currentQuote = 0;
+        public int currentQuote = 0;
 
 		public List<Quote> Quotes { get { return quotes; } }
 		public Quote CurrentQuote { get; set; }
 
+
+        public int right = 0, wrong = 0;
+        
         /*
 		public Quote GetRandomQuote() 
 		{
@@ -34,14 +37,39 @@ namespace Lab3
         {
             if (quotes.Count > 0)
             {
-                CurrentQuote = quotes[currentQuote];
-                currentQuote++;
-                if (currentQuote >= quotes.Count)
-                {
+                if (++currentQuote >= quotes.Count)
                     currentQuote = 0;
-                }
+
+                CurrentQuote = quotes[currentQuote];
+                
             }
             return CurrentQuote;
+        }
+        
+
+        public bool CheckAnswer(string answer)
+        {
+            if (answer == CurrentQuote.Person)
+            {
+                right++;
+
+                return true;
+            }
+            else
+            {
+                wrong++;
+                return false;
+            }
+            
+
+        }
+
+
+
+        public void ResetScores()
+        {
+            right = 0;
+            wrong = 0;
         }
 
         public void LoadQuotes()
