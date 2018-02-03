@@ -13,7 +13,7 @@ namespace Lab3
 	{
 		private Random randNumGen = new Random();
 		private List<Quote> quotes = new List<Quote>();
-        public int currentQuote = 0;
+        private int currentQuote = 0;
 
 		public List<Quote> Quotes { get { return quotes; } }
 		public Quote CurrentQuote { get; set; }
@@ -46,9 +46,10 @@ namespace Lab3
             return CurrentQuote;
         }
         
-
+        // Check input answer with original person
         public bool CheckAnswer(string answer)
         {
+            
             if (answer == CurrentQuote.Person)
             {
                 right++;
@@ -65,7 +66,7 @@ namespace Lab3
         }
 
 
-
+        // Reset all scores
         public void ResetScores()
         {
             right = 0;
