@@ -87,7 +87,8 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:id="@+id/imageViewDie"
-        android:layout_below="@id/textViewPlayersTurn" />
+        android:layout_toRightOf="@id/textViewPlayersTurn"
+        android:layout_below="@id/textViewPlayer2Score" />
     <TextView
         android:text="Points for this turn"
         android:textAppearance="?android:attr/textAppearanceMedium"
