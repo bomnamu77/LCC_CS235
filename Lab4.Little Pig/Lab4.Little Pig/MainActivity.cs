@@ -63,21 +63,33 @@ namespace Lab4.Little_Pig
             var imageViewDie = FindViewById<ImageView>(Resource.Id.imageViewDie);
             var textViewPlayer1Score = FindViewById<TextView>(Resource.Id.textViewPlayer1Score);
             var textViewPlayer2Score = FindViewById<TextView>(Resource.Id.textViewPlayer2Score);
-            displayScores(textViewPlayer1Score, textViewPlayer2Score, textViewPlayersTurn);
-            displayTurnScore(roll, textViewPoint4ThisTurn, imageViewDie);
+            DisplayScores(textViewPlayer1Score, textViewPlayer2Score, textViewPlayersTurn);
+            DisplayTurnScore(roll, textViewPoint4ThisTurn, imageViewDie);
             
 
             buttonRollDie.Click += delegate
             {
                 
                 roll = game.RollDie();
-                displayTurnScore(roll, textViewPoint4ThisTurn, imageViewDie);
+                DisplayTurnScore(roll, textViewPoint4ThisTurn, imageViewDie);
                 if (roll == PigLogic.BAD_NUMBER)
                 {
                     game.ChangeTurn();
-                    displayScores(textViewPlayer1Score, textViewPlayer2Score, textViewPlayersTurn);
-                    
+                    DisplayScores(textViewPlayer1Score, textViewPlayer2Score, textViewPlayersTurn);
 
+                    // Check whether points are same or over the point's limit
+                    // only after both player's playing same amount of rolling
+                    if (game.Turn == 1)
+                    {
+                        if (game.CheckForWinner() != "")
+                        {
+                            
+                            
+                            CheckWinner(textViewPlayersTurn);
+                            ResetGame(textViewPlayer1Score, textViewPlayer2Score);
+                        }
+
+                    }
 
                 }
             };
@@ -89,34 +101,22 @@ namespace Lab4.Little_Pig
             {
                 game.ChangeTurn();
 
-                displayScores(textViewPlayer1Score, textViewPlayer2Score, textViewPlayersTurn);
-                displayTurnScore(roll, textViewPoint4ThisTurn, imageViewDie);
+                DisplayScores(textViewPlayer1Score, textViewPlayer2Score, textViewPlayersTurn);
+                DisplayTurnScore(roll, textViewPoint4ThisTurn, imageViewDie);
 
+                
                 // Check whether points are same or over the point's limit
-                // only after both player's playing
+                // only after both player's playing same amount of rolling
                 if (game.Turn == 1)
                 {
+                    if (game.CheckForWinner() != "")
+                    {
+                        
+                        CheckWinner(textViewPlayersTurn);
+                        ResetGame(textViewPlayer1Score, textViewPlayer2Score);
+
+                    }
                     
-
-                    if (game.CheckForWinner() == "Tie")
-                    {
-                        textViewPlayersTurn.Text = "It's tie!";
-                        game.ResetGame();
-                        textViewPlayer1Score.Text = textViewPlayer2Score.Text = "0";
-                    }
-                    else if (game.CheckForWinner() == game.Player1Name)
-                    {
-                        textViewPlayersTurn.Text = game.Player1Name + " wins!";
-                        game.ResetGame();
-                        textViewPlayer1Score.Text = textViewPlayer2Score.Text = "0";
-                    }
-                    else if (game.CheckForWinner() == game.Player2Name)
-                    {
-                        textViewPlayersTurn.Text = game.Player2Name + " wins!";
-                        game.ResetGame();
-                        textViewPlayer1Score.Text = textViewPlayer2Score.Text = "0";
-
-                    }
                 }
 
 
@@ -125,8 +125,7 @@ namespace Lab4.Little_Pig
             var buttonNewGame = FindViewById<Button>(Resource.Id.buttonNewGame);
             buttonNewGame.Click += delegate
             {
-                game.ResetGame();
-                textViewPlayer1Score.Text = textViewPlayer2Score.Text = "0";
+                ResetGame(textViewPlayer1Score, textViewPlayer2Score);
             };
 
 
@@ -151,7 +150,7 @@ namespace Lab4.Little_Pig
             base.OnSaveInstanceState(outState);
         }
 
-        void displayScores(TextView textViewPlayer1Score, TextView textViewPlayer2Score, TextView textViewPlayersTurn)
+        void DisplayScores(TextView textViewPlayer1Score, TextView textViewPlayer2Score, TextView textViewPlayersTurn)
         {
             if (game.Turn == 2)
             {
@@ -170,7 +169,7 @@ namespace Lab4.Little_Pig
 
         }
 
-        void displayTurnScore(int roll, TextView textViewPoint4ThisTurn, ImageView imageViewDie)
+        void DisplayTurnScore(int roll, TextView textViewPoint4ThisTurn, ImageView imageViewDie)
         {
             switch (roll)
             {
@@ -197,6 +196,31 @@ namespace Lab4.Little_Pig
             textViewPoint4ThisTurn.Text = string.Format("{0}", game.TurnPoints);
 
         }
+
+        void CheckWinner(TextView textViewPlayersTurn)
+        {
+
+            if (game.CheckForWinner() == "Tie")
+            {
+                textViewPlayersTurn.Text = "It's tie!";
+            }
+            else if (game.CheckForWinner() == game.Player1Name)
+            {
+                textViewPlayersTurn.Text = game.Player1Name + " wins!";
+            }
+            else if (game.CheckForWinner() == game.Player2Name)
+            {
+                textViewPlayersTurn.Text = game.Player2Name + " wins!";
+
+            }
+        }
+        void ResetGame(TextView textViewPlayer1Score, TextView textViewPlayer2Score)
+        {
+            game.ResetGame();
+            textViewPlayer1Score.Text = textViewPlayer2Score.Text = "0";
+
+        }
+
     }
 }
 

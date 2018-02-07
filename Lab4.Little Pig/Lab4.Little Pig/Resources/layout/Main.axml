@@ -7,8 +7,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1"
-        android:layout_marginBottom="14.5dp">
+        android:id="@+id/linearLayout1">
         <TextView
             android:text="Player1"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -31,8 +30,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2"
-        android:layout_marginBottom="11.0dp">
+        android:id="@+id/linearLayout2">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,8 +53,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout3"
-        android:layout_marginBottom="18.0dp">
+        android:id="@+id/linearLayout3">
         <TextView
             android:text="Score"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -103,9 +100,7 @@
         android:layout_height="22.0dp"
         android:gravity="center_horizontal"
         android:id="@+id/textViewPlayersTurn"
-        android:layout_gravity="center"
-        android:layout_marginTop="0.0dp"
-        android:layout_marginBottom="0.0dp" />
+        android:layout_gravity="center" />
     <ImageView
         android:src="@drawable/dice1"
         android:layout_width="50dp"

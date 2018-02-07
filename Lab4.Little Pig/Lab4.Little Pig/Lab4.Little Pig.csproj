@@ -48,9 +48,6 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PIgGame.Library">
-      <HintPath>..\..\..\..\..\..\..\자료\김소영\학교\Lane CC\CS235AM\Week4\PigGame\PigGame\PIgGame.Library\obj\Debug\netcoreapp2.0\PIgGame.Library.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -58,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PigLogic.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
