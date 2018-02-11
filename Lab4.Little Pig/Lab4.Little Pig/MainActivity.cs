@@ -34,7 +34,7 @@ namespace Lab4.Little_Pig
                 game.Player2Name = editTextPlayer2.Text;
                 textViewPlayersTurn.Text = game.Player1Name + "'s Turn";
             }
-            else
+            else //I tried to restore data using xml serilization but it doesn't work currently
             {
 
                 // Deserialized the saved object state
@@ -46,17 +46,21 @@ namespace Lab4.Little_Pig
 
 
 
-            /*
+            //When the names of players are changed
             editTextPlayer1.AfterTextChanged += delegate {
+                game.Player1Name = editTextPlayer1.Text;
                 if (game.Turn == 1)
-                    textViewPlayersTurn.Text = editTextPlayer1 + "'s Turn";
+                    textViewPlayersTurn.Text = game.Player1Name + "'s Turn";
+               
                 
             };
             editTextPlayer2.AfterTextChanged += delegate {
+                game.Player2Name = editTextPlayer2.Text;
                 if (game.Turn == 2)
-                    textViewPlayersTurn.Text = editTextPlayer2 + "'s Turn";
+                    textViewPlayersTurn.Text = game.Player2Name + "'s Turn";
 
-            };*/
+            };
+            
             
             var buttonRollDie = FindViewById<Button>(Resource.Id.buttonRollDie);
             var textViewPoint4ThisTurn = FindViewById<TextView>(Resource.Id.textViewPoint4ThisTurn);
@@ -72,6 +76,7 @@ namespace Lab4.Little_Pig
                 
                 roll = game.RollDie();
                 DisplayTurnScore(roll, textViewPoint4ThisTurn, imageViewDie);
+                //when the roll is a bad number, it changes turn with giving 0 score to current player.
                 if (roll == PigLogic.BAD_NUMBER)
                 {
                     game.ChangeTurn();
@@ -150,6 +155,8 @@ namespace Lab4.Little_Pig
             base.OnSaveInstanceState(outState);
         }
 
+        // Function DisplayScores
+        // display updated scores and who's turn
         void DisplayScores(TextView textViewPlayer1Score, TextView textViewPlayer2Score, TextView textViewPlayersTurn)
         {
             if (game.Turn == 2)
@@ -169,6 +176,9 @@ namespace Lab4.Little_Pig
 
         }
 
+
+        // Function DisplayTurnScore
+        // display dice image and turn points
         void DisplayTurnScore(int roll, TextView textViewPoint4ThisTurn, ImageView imageViewDie)
         {
             switch (roll)
@@ -197,6 +207,8 @@ namespace Lab4.Little_Pig
 
         }
 
+        // function CheckWineer
+        // check for winner and display the result
         void CheckWinner(TextView textViewPlayersTurn)
         {
 
@@ -214,6 +226,9 @@ namespace Lab4.Little_Pig
 
             }
         }
+
+        // function ResetGame
+        // reset the game and score display
         void ResetGame(TextView textViewPlayer1Score, TextView textViewPlayer2Score)
         {
             game.ResetGame();
