@@ -13,7 +13,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/textPlayer1"
+            android:id="@+id/textPlayer1Actual"
             android:gravity="center_horizontal"
             android:layout_weight="1" />
         <TextView
@@ -23,31 +23,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:id="@+id/textPlayer2"
+            android:id="@+id/textPlayer2Actual"
             android:layout_weight="1" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:id="@+id/editTextPlayer1"
-            android:hint="player1"
-            android:text="player1"
-            android:layout_marginTop="0.0dp" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_weight="1"
-            android:id="@+id/editTextPlayer2"
-            android:hint="player2"
-            android:text="player2" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
