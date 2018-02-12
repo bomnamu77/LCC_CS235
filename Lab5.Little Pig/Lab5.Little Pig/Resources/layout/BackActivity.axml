@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <fragment
-        android:name="Lab5.Little Pig.Fragement2"
+   <fragment
+        android:name="Lab5.Little_Pig.Fragment2"
+        android:id="@+id/Fragment2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/fragment2"
         android:layout_weight="1" />
 </LinearLayout>

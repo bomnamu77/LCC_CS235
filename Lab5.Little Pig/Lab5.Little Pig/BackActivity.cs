@@ -20,6 +20,11 @@ namespace Lab5.Little_Pig
             base.OnCreate(savedInstanceState);
 
             // Create your application here
+
+            SetContentView(Resource.Layout.BackActivity);
+
+            
+            
         }
     }
 }

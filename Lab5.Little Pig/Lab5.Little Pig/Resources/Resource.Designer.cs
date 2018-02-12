@@ -78,6 +78,9 @@ namespace Lab5.Little_Pig
 			// aapt resource value: 0x7f050018
 			public const int Fragment1 = 2131034136;
 			
+			// aapt resource value: 0x7f050000
+			public const int Fragment2 = 2131034112;
+			
 			// aapt resource value: 0x7f050016
 			public const int buttonEndTurn = 2131034134;
 			
@@ -95,9 +98,6 @@ namespace Lab5.Little_Pig
 			
 			// aapt resource value: 0x7f050007
 			public const int editTextPlayer2 = 2131034119;
-			
-			// aapt resource value: 0x7f050000
-			public const int fragment2 = 2131034112;
 			
 			// aapt resource value: 0x7f050001
 			public const int howToPlayTextView = 2131034113;

@@ -10,16 +10,20 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using PigGame;
 
 namespace Lab5.Little_Pig
 {
     public class Fragment2 : Fragment
     {
+        PigLogic game;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             // Create your fragment here
+            
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -28,9 +32,9 @@ namespace Lab5.Little_Pig
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
 
-            var view = inflater.Inflate(Resource.Layout.Fragment2, container, false);
+            return inflater.Inflate(Resource.Layout.Fragment2, container, false);
 
-            return view;
+            
             //return base.OnCreateView(inflater, container, savedInstanceState);
         }
     }
