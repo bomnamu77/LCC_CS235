@@ -3,10 +3,13 @@ using Android.Widget;
 using Android.OS;
 using PigGame;
 using Android.Content;
+using Android.Content.PM;
+using Android.Content.Res;
 
 namespace Lab5.Little_Pig
 {
-    [Activity(Label = "Lab5.Little_Pig", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape )]
+    [Activity(Label = "Lab5.Little_Pig", MainLauncher = true )]
+    
 
     
 
@@ -17,6 +20,19 @@ namespace Lab5.Little_Pig
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+
+            // Only use landscape orientation for large (tablet) screens
+            // This is becuase my one layout for large sceens looks better in landscape
+            if ((Application.ApplicationContext.Resources.Configuration.ScreenLayout & ScreenLayout.SizeMask) == ScreenLayout.SizeLarge)
+            {
+                RequestedOrientation = ScreenOrientation.Landscape;
+            }
+
+            if ((Application.ApplicationContext.Resources.Configuration.ScreenLayout & ScreenLayout.SizeMask) == ScreenLayout.SizeSmall)
+            {
+                RequestedOrientation = ScreenOrientation.Portrait;
+            }
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.FrontActivity);
@@ -58,6 +74,8 @@ namespace Lab5.Little_Pig
 
                     StartActivity(intent);
                 }
+
+
             };
             
         }

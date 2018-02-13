@@ -24,7 +24,7 @@ namespace Lab4.Little_Pig
 
             int roll = 0;
             var editTextPlayer1 = FindViewById<EditText>(Resource.Id.editTextPlayer1);
-            var editTextPlayer2 = FindViewById<TextView>(Resource.Id.editTextPlayer2);
+            var editTextPlayer2 = FindViewById<EditText>(Resource.Id.editTextPlayer2);
             var textViewPlayersTurn = FindViewById<TextView>(Resource.Id.textViewPlayersTurn);
             if (savedInstanceState == null)     //if null, initialization
             {
