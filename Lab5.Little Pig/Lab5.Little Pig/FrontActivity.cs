@@ -6,8 +6,7 @@ using Android.Content;
 
 namespace Lab5.Little_Pig
 {
-    [Activity(Label = "Lab5.Little_Pig", MainLauncher = true)]
-    //, ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape )]
+    [Activity(Label = "Lab5.Little_Pig", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape )]
 
     
 
@@ -51,8 +50,13 @@ namespace Lab5.Little_Pig
 
                 if (!isDualPane)
                 {
-                    var back = new Intent(this, typeof(BackActivity));
-                    StartActivity(back);
+
+                    var intent = new Intent();
+                    intent.SetClass(this, typeof(BackActivity));
+                    intent.PutExtra("player1name", editTextPlayer1.Text);
+                    intent.PutExtra("player2name", editTextPlayer2.Text);
+
+                    StartActivity(intent);
                 }
             };
             
