@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">Lab5.Little Pig</string>
+  <string name="instruction">Welcome to the Pig Game!!</string>
+
 </resources>
