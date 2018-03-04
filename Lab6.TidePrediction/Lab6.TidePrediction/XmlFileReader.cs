@@ -47,7 +47,10 @@ namespace Lab6.TidePrediction
                                 // Add date
                                 if (reader.Read() && prediction != null)
                                 {
-                                    prediction.Add(DATE, reader.Value.Trim());
+                                    string temp = reader.Value.Trim();
+
+                                    prediction.Add(DATE, temp);
+                                    prediction.Add("Month", temp.Substring(6, 2));
                                 }
                                 break;
                             case DAY:

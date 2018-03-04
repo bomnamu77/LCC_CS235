@@ -26,6 +26,7 @@ namespace Lab6.TidePrediction
             
             int i = 0;
             //JavaDictionary<string, object> prediction = null;
+            //foreach(IDictionary<string, object> in dataList)
             while ( i < itemCount )
             {
                 object date, day, time, height, hi_low;
@@ -43,22 +44,16 @@ namespace Lab6.TidePrediction
                 string stime = time.ToString();
                 string sheight = height.ToString();
                 string shi_low = hi_low.ToString();
-                tideItem[i] = new TideItem(sdate, sday, stime, sheight, shi_low);
+                 tideItem[i] = new TideItem(sdate, sday, stime, sheight, shi_low);
                 i++;
 
             }
+
             
-            ListAdapter = new ArrayAdapter<TideItem>(this,
-                 Android.Resource.Layout.TwoLineListItem,
-                 tideItem);
-            /*
-            // constructor takes: reference to this Activity, List of Dictionary objects, row layout, 
-            ListAdapter = new VocabAdapter(this, dataList,
-                Android.Resource.Layout.SimpleListItem1,
-                new string[] { XmlVocabFileParser.SPANISH, XmlVocabFileParser.ENGLISH },
-                new int[] { Android.Resource.Id.Text1 }
-            );*/
-            
+            ListAdapter = new TideAdapter(this, Android.Resource.Layout.TwoLineListItem, tideItem);
+            // This is all you need to do to enable fast scrolling
+            ListView.FastScrollEnabled = true;
+
             // Set our view from the "main" layout resource
             //SetContentView(Resource.Layout.Main);
 
