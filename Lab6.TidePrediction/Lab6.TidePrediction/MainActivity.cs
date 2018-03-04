@@ -20,13 +20,15 @@ namespace Lab6.TidePrediction
             var reader = new XmlTideFileParser(Assets.Open(@"TideData.xml"));
             var dataList = reader.TideList;
 
+            //get size of list
             int itemCount = dataList.Count;
 
+            //create arrays
             tideItem = new TideItem[itemCount];
             
             int i = 0;
-            //JavaDictionary<string, object> prediction = null;
-            //foreach(IDictionary<string, object> in dataList)
+            
+            //convert list of dictionary data to array
             while ( i < itemCount )
             {
                 object date, day, time, height, hi_low;
@@ -49,13 +51,12 @@ namespace Lab6.TidePrediction
 
             }
 
-            
+            //create list view with ArrayAdapter with SectionIndex
             ListAdapter = new TideAdapter(this, Android.Resource.Layout.TwoLineListItem, tideItem);
             // This is all you need to do to enable fast scrolling
             ListView.FastScrollEnabled = true;
 
-            // Set our view from the "main" layout resource
-            //SetContentView(Resource.Layout.Main);
+            
 
 
         }
@@ -64,6 +65,7 @@ namespace Lab6.TidePrediction
         protected override void OnListItemClick(ListView l,
              View v, int position, long id)
         {
+            //shows tide height using toast message 
             string word = tideItem[position].Height;
             Android.Widget.Toast.MakeText(this, word,
                 Android.Widget.ToastLength.Short).Show();
