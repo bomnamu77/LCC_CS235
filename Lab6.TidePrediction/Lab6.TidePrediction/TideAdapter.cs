@@ -27,8 +27,7 @@ namespace Lab6.TidePrediction
             context = c;
             resource = r;
             items = i;
-            // Sort list by Part Of Speech (pos) field
-            //dataList.Sort((x, y) => String.Compare((string)x[XmlTideFileParser.POS], (string)y[XmlVocabFileParser.POS]));
+            
             BuildSectionIndex();
         }
 

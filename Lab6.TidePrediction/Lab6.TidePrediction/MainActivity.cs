@@ -66,7 +66,7 @@ namespace Lab6.TidePrediction
              View v, int position, long id)
         {
             //shows tide height using toast message 
-            string word = tideItem[position].Height;
+            string word = tideItem[position].Height + " ft";
             Android.Widget.Toast.MakeText(this, word,
                 Android.Widget.ToastLength.Short).Show();
         }
