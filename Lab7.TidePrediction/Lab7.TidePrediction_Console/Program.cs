@@ -56,11 +56,11 @@ namespace Lab7.TidePrediction_Console
             {
                 pk += db.Insert(new Tide()
                 {
-                    Location= location,
+                    Location = location,
                     
-                    Date = Convert.ToDateTime(TideInfo[0]+" " + TideInfo[2]]),
+                    DateTimes = Convert.ToDateTime(TideInfo[0] + " " + TideInfo[2]),
                     Day = Convert.ToString(TideInfo[1]),
-                    Time = Convert.ToDateTime(TideInfo[2]),
+                    //Time = Convert.ToDateTime(TideInfo[2]),
                     Height = decimal.Parse(TideInfo[3]),
                     H_L= Convert.ToString(TideInfo[5])
                 });

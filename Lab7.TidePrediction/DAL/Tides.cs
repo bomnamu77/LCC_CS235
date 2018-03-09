@@ -11,9 +11,9 @@ namespace Lab7.TidePrediction.DAL
         [MaxLength(8)]
        
         public string Location { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime DateTimes { get; set; }
         public string Day { get; set; }
-        public DateTime Time { get; set; }
+        //public DateTime Time { get; set; }
         public decimal Height { get; set; }
         public string H_L { get; set; }
     }

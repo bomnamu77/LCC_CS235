@@ -22,9 +22,10 @@
     <DatePicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:calendarViewShown="false"
+        android:id="@+id/tideDatePicker"
         android:spinnersShown="true"
-        android:id="@+id/tideDatePicker" />
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
     <Button
         android:text="Show Tides"
         android:layout_width="fill_parent"
