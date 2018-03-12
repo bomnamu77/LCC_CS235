@@ -48,8 +48,9 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PIgGame.Library">
-      <HintPath>..\..\..\..\..\..\..\자료\김소영\학교\Lane CC\CS235AM\Week4\PigGame\PigGame\PIgGame.Library\obj\Debug\netcoreapp2.0\PIgGame.Library.dll</HintPath>
+    <Reference Include="PIgGame.Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PigGame\PigGame.Console\bin\Debug\netcoreapp2.0\PIgGame.Library.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
