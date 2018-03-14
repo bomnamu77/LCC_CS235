@@ -2,12 +2,15 @@
 // Brian Bird, 5/20/13
 // Converted to an exercise starter and completed
 // By Brian Bird 5/12/16
+// Modified by Soyoung Kim 3/14/18
 
 using System;
 using SQLite;
 using System.IO;
 using Lab7.TidePrediction.DAL;
 using System.Collections.Generic;
+using static Android.InputMethodServices.InputMethodService;
+
 
 namespace Lab7.TidePrediction_Console
 {
@@ -30,21 +33,18 @@ namespace Lab7.TidePrediction_Console
                 db.DeleteAll<Tide>();
             }
 
-            AddTidesToDb(db, "Astoria", "Astoria.csv");
-            AddTidesToDb(db, "CoosBay", "CoosBay.csv");
-            AddTidesToDb(db, "Florence", "Florence.csv");
+            AddTidesToDb(db, "Astoria", "Astoria.xml");
+            AddTidesToDb(db, "CoosBay", "CoosBay.xml");
+            AddTidesToDb(db, "Florence", "Florence.xml");
         }
 
         private static void AddTidesToDb(SQLiteConnection db, string location, string file)
         {
-            // parse the stock csv file
-            const int NUMBER_OF_FIELDS = 6;    // The text file will have 6 fields, The first is the date, the last is the High/Low
-            TextParser parser = new TextParser(",", NUMBER_OF_FIELDS);     // instantiate our general purpose text file parser object.
-            List<string[]> stringArrays;    // The parser generates a List of string arrays. Each array represents one line of the text file.
-            stringArrays = parser.ParseText(File.Open(@"../../../Lab7.TidePrediction_Console/DAL/" + file, FileMode.Open));     // Open the file as a stream and parse all the text
+            List<string[]> stringArrays;
 
-            // Don't use the first array, it's a header
-            stringArrays.RemoveAt(0);
+            // Read and prase the vocabulary file and provide the adapter with the data
+            var reader = new XmlTideFileParser(File.Open(@"../../../Lab7.TidePrediction_Console/DAL/" + file, FileMode.Open));
+            stringArrays = reader.TideList;
 
             // Show the first date in Ticks
             DateTime firstDate = Convert.ToDateTime(stringArrays[0][0]);
@@ -57,12 +57,12 @@ namespace Lab7.TidePrediction_Console
                 pk += db.Insert(new Tide()
                 {
                     Location = location,
-                    
-                    DateTimes = Convert.ToDateTime(TideInfo[0] + " " + TideInfo[2]),
+
+                    Date = Convert.ToString(TideInfo[0]),
                     Day = Convert.ToString(TideInfo[1]),
-                    //Time = Convert.ToDateTime(TideInfo[2]),
+                    Time = Convert.ToString(TideInfo[2]),
                     Height = decimal.Parse(TideInfo[3]),
-                    H_L= Convert.ToString(TideInfo[5])
+                    H_L = Convert.ToString(TideInfo[4])
                 });
                 // Give an update every 100 rows
                 if (pk % 100 == 0)
@@ -71,6 +71,9 @@ namespace Lab7.TidePrediction_Console
             // Show the final count of rows inserted
             Console.WriteLine("{0} {1} rows inserted", pk, location);
 
+        
+
         }
+        
     }
 }

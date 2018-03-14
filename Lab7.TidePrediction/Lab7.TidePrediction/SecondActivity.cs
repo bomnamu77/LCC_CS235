@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using SQLite;
 using Lab7.TidePrediction.DAL;
@@ -23,14 +17,24 @@ namespace Lab7.TidePrediction
         {
             base.OnCreate(savedInstanceState);
 
-            // Create your application here
+            // get location and date information from main activity
             string location = Intent.GetStringExtra("Location");
             string date = Intent.GetStringExtra("Date");
-            DateTime dt_Date = DateTime.Parse(date);
-			DateTime nextDate = dt_Date.AddDays(1);
 
-			//ListView tidesListView = FindViewById<ListView>(Resource.Id.tidesListView);
-			string dbPath = "";
+
+            //convert date data to appropriate format
+            DateTime dt_Date = DateTime.Parse(date);
+            string str_Month = dt_Date.Month.ToString();
+            string str_Day = dt_Date.Month.ToString();
+            if (str_Month.Length == 1)  // make Month data two digits
+                str_Month = "0" + str_Month;
+            if (str_Day.Length == 1)    // make Month data two digits
+                str_Day = "0" + str_Day;
+            string str_Date = dt_Date.Year + "/" + str_Month + "/" + str_Day;
+            
+
+            
+            string dbPath = "";
 			SQLiteConnection db = null;
 			// Get the path to the database that was deployed in Assets
 			dbPath = Path.Combine(
@@ -46,16 +50,17 @@ namespace Lab7.TidePrediction
 			db = new SQLiteConnection(dbPath);
 			var tides = (from s in db.Table<Tide>()
                             where (s.Location == location)
-							&& (s.DateTimes >= dt_Date) && (s.DateTimes <= nextDate)
+                            && (s.Date == str_Date)
 						 select s).ToList();
             // HACK: gets around "Default constructor not found for type System.String" error
+            // create string Array and bind it to ListView
             int count = tides.Count;
             string[] tideInfoArray = new string[count];
             for (int i = 0; i < count; i++)
             {
                 tideInfoArray[i] =
-                    tides[i].DateTimes.Month + "/" + tides[i].DateTimes.Day + "\t\t" + tides[i].Day + "\t\t" + tides[i].DateTimes.TimeOfDay + "\n" + 
-                        tides[i].Height+ "\t\t" + tides[i].H_L;
+                    tides[i].Date + "\t\t" + tides[i].Day + "\t\t" + tides[i].Time + "\n" +
+                    tides[i].Height+ " ft \t\t" + tides[i].H_L;
             }
 
             

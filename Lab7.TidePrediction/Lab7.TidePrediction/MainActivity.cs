@@ -61,7 +61,7 @@ namespace Lab7.TidePrediction
 
             Tide dateTide =
                 db.Get<Tide>((from s in db.Table<Tide>() select s).Min(s => s.ID));
-            DateTime dateTime = dateTide.DateTimes;
+            DateTime dateTime = DateTime.Parse(dateTide.Date);
             tideDatePicker.DateTime = dateTime;
 
             /* ------- Query for selected stock prices -------- */
