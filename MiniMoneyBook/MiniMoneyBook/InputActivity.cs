@@ -88,8 +88,8 @@ namespace MiniMoneyBook
                     
                 }
 
-                Android.Widget.Toast.MakeText(this, "result:" + db.Table<MoneyBook>().Count().ToString(),
-                    Android.Widget.ToastLength.Short).Show();
+                //Android.Widget.Toast.MakeText(this, "result:" + db.Table<MoneyBook>().Count().ToString(),
+                  //  Android.Widget.ToastLength.Short).Show();
                 var main = new Intent(this, typeof(MainActivity));
 
                 StartActivity(main);
