@@ -14,7 +14,7 @@ using OxyPlot.Series;
 namespace MiniMoneyBook
 {
     
-    [Activity(Label = "MiniMoneyBook", MainLauncher = true, Icon ="@drawable/Icon")]
+    [Activity(Label = "MiniMoneyBook", MainLauncher = true, Icon ="@drawable/mIcon")]
     public class MainActivity : Activity
     {
         static object locker = new object();
