@@ -26,53 +26,50 @@ namespace MiniMoneyBook
             // Create your application here
 
             SQLiteConnection db = null;
-            // Get the path to the database that was deployed in Assets
+            // Get the path to the database 
             string dbPath = Path.Combine(
             System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "MoneyBook.db3");
 
             db = new SQLiteConnection(dbPath);
 
-            //var selectDatePicker = FindViewById<DatePicker>(Resource.Id.selectDatePicker);
-
-
-
-            var monthList = db.Table<MoneyBook>().GroupBy(s =>s.Date.Year+s.Date.Month).Select(s => s.First()).ToList();
-             // HACK: gets around "Default constructor not found for type System.String" error
-             // create string Array and bind it to ListView
-             int count = monthList.Count;
-            //var monthBalance = db.Table<MoneyBook>().GroupBy(s => s.Date.Year + s.Date.Month).ToList();
-             //string[] monthListArray = new string[count];
+            //get months that have moneybook records
+             var monthList = db.Table<MoneyBook>().GroupBy(s =>s.Date.Month).Select(s => s.First()).ToList();
+            
+                        
              foreach(var monthData in monthList)
-             //for (int i = 0; i < count; i++)
              {
                 var firstDayOfMonth = new DateTime(monthData.Date.Year, monthData.Date.Month, 1);
                 var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                // query to get sum of each month's records 
                 var thisMonthBalance = (from s in db.Table<MoneyBook>()
                                         where (s.Date >= firstDayOfMonth && s.Date <= lastDayOfMonth)
                                         select s).Sum(s => s.Amount);
-
+                // query to get records of each month
                 var itemsInMonth = (from s in db.Table<MoneyBook>()
                                     where (s.Date >= firstDayOfMonth && s.Date <= lastDayOfMonth)
                                     select s).ToList();
                 int itemsCount = itemsInMonth.Count;
+                //create an Array to add items in the second level
                 var mbViewItems = new MBViewItem[itemsCount];
                 int j=0;
+
+                //add data for second level list to the array 
                 foreach(var item in itemsInMonth)
                 {
                     
                     mbViewItems[j++] = new MBViewItem { Date = item.Date.ToShortDateString(), I_E = item.I_E, Category = item.Category, Amount = item.Amount };
                 }
+
+
                 viewItems.Add(new MBView()
                 {
-
+                    //first level data
                     Year = monthData.Date.Year.ToString(),
                     Month = monthData.Date.Month.ToString(),
-
                     Balance = thisMonthBalance,
+                    //Array for second level items
                     MBViewItems = mbViewItems
 
-
-                    
                                            
                 });
 
@@ -83,34 +80,7 @@ namespace MiniMoneyBook
             var adapter = new MBViewAdaptor(this, viewItems);
             SetListAdapter(adapter);
 
-            //MoneyBook dateMoneyBook =
-            //    db.Get<MoneyBook>((from s in db.Table<MoneyBook>() select s).Min(s => s.ID));
-            //DateTime dateTime = dateMoneyBook.Date;
-            //selectDatePicker.DateTime = dateTime;
 
-            /*selectDatePicker.DateChanged += delegate
-            {
-                DateTime selectedDate = selectDatePicker.DateTime;
-                DateTime nextDate = selectedDate.AddDays(1);
-                var moneyBooks = (from s in db.Table<MoneyBook>()
-                                  where (s.Date >= selectedDate && s.Date < nextDate)
-
-                                  select s).ToList();
-                // HACK: gets around "Default constructor not found for type System.String" error
-                // create string Array and bind it to ListView
-                int count = moneyBooks.Count;
-                string[] moneyBookInfoArray = new string[count];
-                for (int i = 0; i < count; i++)
-                {
-                    moneyBookInfoArray[i] =
-                        moneyBooks[i].Date + "\t\t" + moneyBooks[i].I_E + "\t\t" + moneyBooks[i].Category + "\t\t" + moneyBooks[i].Amount;
-                }
-
-
-                ListAdapter = new ArrayAdapter<string>(this,
-                     Android.Resource.Layout.SimpleListItem1,
-                     moneyBookInfoArray);
-            };*/
 
         }
     }

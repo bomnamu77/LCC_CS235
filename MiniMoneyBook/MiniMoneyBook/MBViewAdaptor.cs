@@ -19,7 +19,7 @@ namespace MiniMoneyBook
         // Context, usually set to the activity:
         private readonly Context _context;
 
-        // List of produce objects ("vegetables", "fruits", "herbs"):
+        // List of mbView objects (Year-Month):
         private readonly List<MBView> _mbView;
 
         public MBViewAdaptor(Context context, List<MBView> mbView)
@@ -46,7 +46,7 @@ namespace MiniMoneyBook
 
         public override int GroupCount
         {
-            // Return the number of produce ("vegetables", "fruits", "herbs") objects:
+            // Return the number of mbView objects:
             get { return _mbView.Count; }
         }
 
@@ -62,14 +62,13 @@ namespace MiniMoneyBook
                 view = inflater.Inflate(Android.Resource.Layout.SimpleExpandableListItem1, null);
             }
 
-            // Grab the produce object ("vegetables", "fruits", etc.) at the group position:
+            // Grab the mbView object (Year-Month) at the group position:
             var mbView = _mbView[groupPosition];
 
-            // Get the built-in first text view and insert the group name ("Vegetables", "Fruits", etc.):
+            // Get the built-in first text view and insert the group name (Month-Year - Balance):
             TextView textView = view.FindViewById<TextView>(Android.Resource.Id.Text1);
-            textView.Text = mbView.Year + "/" + mbView.Month+"\t\t" + mbView.Balance.ToString();
-            //textView = view.FindViewById<TextView>(Android.Resource.Id.Text2);
-            //textView.Text = mbView.Balance.ToString();
+            textView.Text = mbView.Month+ "/" + mbView.Year + "\t\t\t" + mbView.Balance.ToString();
+            
             return view;
         }
 
@@ -89,7 +88,7 @@ namespace MiniMoneyBook
 
         public override int GetChildrenCount(int groupPosition)
         {
-            // Return the number of children (produce item objects) in the group (produce object):
+            // Return the number of children (mbView item objects) in the group MBViewItems object):
             var mbView = _mbView[groupPosition];
             return mbView.MBViewItems.Length;
         }
@@ -106,23 +105,19 @@ namespace MiniMoneyBook
                 view = inflater.Inflate(Android.Resource.Layout.SimpleExpandableListItem2, null);
             }
 
-            // Grab the produce object ("vegetables", "fruits", etc.) at the group position:
+            // Grab the mbView object (Year-Month) at the group position:
             var mbView = _mbView[groupPosition];
 
-            // Extract the produce item object ("bananas", "apricots", etc.) at the child position:
+            // Extract the MBViewitems object (records of each month) at the child position:
             var mbViewItem = mbView.MBViewItems[childPosition];
 
-            // Get the built-in first text view and insert the child name ("Bananas", "Apricots", etc.):
+            // Get the built-in first text view and insert the child name :
             TextView textView = view.FindViewById<TextView>(Android.Resource.Id.Text1);
-            if (mbViewItem.I_E == "I")
+            if (mbViewItem.I_E == "I")      //If it's "income", blue col
                 textView.SetTextColor(Android.Graphics.Color.Blue);
-            else
+            else //if it's "expense", red color
                 textView.SetTextColor(Android.Graphics.Color.Red);
             textView.Text = mbViewItem.Date+" " + mbViewItem.I_E + " " + mbViewItem.Category + " " + mbViewItem.Amount;
-
-            // Reuse the textView to insert the number of produce units into the child's second text field:
-            //textView = view.FindViewById<TextView>(Android.Resource.Id.Text2);
-            //textView.Text = produceItem.Count.ToString() + " units";
 
             return view;
         }

@@ -89,5 +89,4 @@
             android:textStyle="bold"
             android:gravity="left" />
     </LinearLayout>
-
 </LinearLayout>

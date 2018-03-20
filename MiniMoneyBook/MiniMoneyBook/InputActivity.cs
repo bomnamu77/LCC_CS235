@@ -30,13 +30,11 @@ namespace MiniMoneyBook
             SetContentView(Resource.Layout.InputActivity);
 
            
-
             SQLiteConnection db = null;
-            // Get the path to the database that was deployed in Assets
+            // Get the path to the database 
             string dbPath = Path.Combine(
             System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "MoneyBook.db3");
-            //string dbPath = @"/Assets/MoneyBook.db3";
-            //string dbPath = Path.Combine(Directory.GetCurrentDirectory(), "MoneyBook.db3");
+            
             db = new SQLiteConnection(dbPath);
 
             string ieResult = checkI_E();
@@ -88,8 +86,7 @@ namespace MiniMoneyBook
                     
                 }
 
-                //Android.Widget.Toast.MakeText(this, "result:" + db.Table<MoneyBook>().Count().ToString(),
-                  //  Android.Widget.ToastLength.Short).Show();
+                
                 var main = new Intent(this, typeof(MainActivity));
 
                 StartActivity(main);

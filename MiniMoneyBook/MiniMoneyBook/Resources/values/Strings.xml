@@ -2,7 +2,7 @@
 <resources>
   <string name="app_name">MiniMoneyBook</string>
   <string name="today">Today is </string>
-  <string name="this_month">This Month Balance</string>
+  <string name="this_month">This Month </string>
 
   <string name="date">Date</string>
   <string name="amount">Amount</string>

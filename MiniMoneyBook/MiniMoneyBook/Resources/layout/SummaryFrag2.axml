@@ -3,11 +3,10 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <ImageView
-        android:src="@drawable/piechart"
+    <OxyPlot.Xamarin.Android.PlotView
+        android:id="@+id/plot_view"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:id="@+id/imageView1" />
+        android:layout_height="130dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

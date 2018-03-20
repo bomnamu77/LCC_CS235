@@ -7,12 +7,14 @@ using MiniMoneyBook.DAL;
 using System;
 using System.Linq;
 using System.IO;
-
+using OxyPlot.Xamarin.Android;
+using OxyPlot;
+using OxyPlot.Series;
 
 namespace MiniMoneyBook
 {
     
-    [Activity(Label = "MiniMoneyBook", MainLauncher = true)]
+    [Activity(Label = "MiniMoneyBook", MainLauncher = true, Icon ="@drawable/icon")]
     public class MainActivity : Activity
     {
         static object locker = new object();
@@ -34,19 +36,7 @@ namespace MiniMoneyBook
             string dbPath = Path.Combine(
             System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "MoneyBook.db3");
 
-            // It seems you can read a file in Assets, but not write to it
-            // so we'll copy our file to a read/write location
-            //using (Stream inStream = Assets.Open("MoneyBook.db3"))
-            //using (Stream outStream = File.Create(dbPath))
-             //   inStream.CopyTo(outStream);
-
-            // Open the database
-            //db = new SQLiteConnection(dbPath);
-            //dbPath = @"../../../MiniMoneyBook/Assets/MoneyBook.db3";
-
-            //string dbPath = Directory.GetCurrentDirectory ();
-            //string dbPath = @"../../Assets/MoneyBook.db3";
-            //string dbPath = Path.Combine(Directory.GetCurrentDirectory(), "MoneyBook.db3");
+            
             db = new SQLiteConnection(dbPath);
 
 
@@ -65,12 +55,7 @@ namespace MiniMoneyBook
             lock (locker)
             {
                 int temp = db.Table<MoneyBook>().Count();
-                //Android.Widget.Toast.MakeText(this, temp.ToString(),
-                 //     Android.Widget.ToastLength.Short).Show();
-                //var sum = db.Get<MoneyBook>((from s in db.Table<MoneyBook>()
-                //                             where (s.Date >= firstDayOfMonth) && (s.Date <= lastDayOfMonth)
-                //                             select s).Sum(s => s.Amount));
-
+                
                 var thisMonthBalance = (from s in db.Table<MoneyBook>()
                              where (s.Date >= firstDayOfMonth && s.Date <= lastDayOfMonth)
                              select s).Sum(s => s.Amount);
@@ -83,9 +68,6 @@ namespace MiniMoneyBook
                                         where (s.Date >= firstDayOfMonth && s.Date <= lastDayOfMonth && s.I_E == "E")
                                         select s).Sum(s => s.Amount);
 
-                //Tide dateTide =
-                //  db.Get<Tide>((from s in db.Table<Tide>() select s).Min(s => s.ID));
-
                 if (thisMonthBalance > 0)
                     thisMonthTextView.SetTextColor(Android.Graphics.Color.Green);
                 else
@@ -97,32 +79,32 @@ namespace MiniMoneyBook
                 expenseTextView.Text = "$" + expense.ToString();
                 
                 expenseTextView.SetTextColor(Android.Graphics.Color.Red);
-                //thisMonthTextView.SetText(Resource.String.this_month);
-                //thisMonthTextView.setText
+                
             }
 
+            //PieChart 
+            PlotView view = FindViewById<PlotView>(Resource.Id.plot_view);
+            view.Model = CreatePlotModel(db, firstDayOfMonth, lastDayOfMonth);
+               
+            //when click add button
             Button addButton = FindViewById<Button>(Resource.Id.addButton);
 
             addButton.Click += delegate
             {
                 var input = new Intent(this, typeof(InputActivity));
-                //second.PutExtra("Location", selectedLocation);
-                //second.PutExtra("Date", tideDatePicker.DateTime.ToString());
                 StartActivity(input);
             };
 
-
+            //When click log button
             Button logButton = FindViewById<Button>(Resource.Id.logButton);
 
             logButton.Click += delegate
             {
                 var log = new Intent(this, typeof(LogActivity));
-                //second.PutExtra("Location", selectedLocation);
-                //second.PutExtra("Date", tideDatePicker.DateTime.ToString());
                 StartActivity(log);
             };
         }
-
+        //Initialize database with category 
         private static void InitDb(SQLiteConnection db)
         {
 
@@ -151,6 +133,8 @@ namespace MiniMoneyBook
                     db.Insert(new Category()
                     { I_E = "E", CategoryName = "Bills" });
                     db.Insert(new Category()
+                    { I_E = "E", CategoryName = "Transportaion" });
+                    db.Insert(new Category()
                     { I_E = "E", CategoryName = "Personals" });
 
                     db.Insert(new Category()
@@ -159,6 +143,34 @@ namespace MiniMoneyBook
 
                 }
             }
+        }
+
+        //create Pie chart for expense usage
+        private PlotModel CreatePlotModel(SQLiteConnection db, DateTime firstDayOfMonth, DateTime lastDayOfMonth )
+        {
+            PlotModel plotModel = new PlotModel { Title = "Expense Usage Ratio", TitleColor=OxyColors.White };
+
+            PieSeries seriesP1 = new PieSeries { StrokeThickness = 1.0, InsideLabelPosition = 0.8, AngleSpan = 360, StartAngle = 0, TextColor=OxyColors.White};
+
+            lock (locker)
+            {
+                //get category that are used for this month
+                var categoryList = (from s in db.Table<MoneyBook>()
+                                    where (s.Date >= firstDayOfMonth && s.Date <= lastDayOfMonth && s.I_E == "E")
+                                    select s).GroupBy(s => s.Category).Select(s => s.First());
+                //for each category, get sum of a category
+                foreach (var cat in categoryList)
+                {
+                    var sumCategory = (from s in db.Table<MoneyBook>()
+                                       where (s.Date >= firstDayOfMonth && s.Date <= lastDayOfMonth && s.I_E == "E" && s.Category == cat.Category)
+                                       select s).Sum(s => s.Amount);
+                    seriesP1.Slices.Add(new PieSlice(cat.Category, Convert.ToDouble(sumCategory)) { IsExploded = true });
+                }
+            }
+            plotModel.Series.Add(seriesP1);
+
+
+            return plotModel;
         }
     }
 }
